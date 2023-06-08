@@ -14,6 +14,13 @@ typedef struct queue
 	struct queue *proximo;
 }queue;
 
+typedef struct {
+	pid_t pid;
+	pid_t ppid;
+	char name[21];
+	char state;
+}process;
+
 queue *fileira;
 
 #endif

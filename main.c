@@ -9,7 +9,7 @@ int main(int argc, char **argv){
 	{
 		usage(argv[0]);
 	}
-	read_file(atoi(argv[1]));
+	show_process(get_process(atoi(argv[1])));
 	
 	return EXIT_SUCCESS;
 }
