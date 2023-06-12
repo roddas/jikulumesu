@@ -5,20 +5,25 @@
 #define FILENAME_MAX_LENGTH 32
 #define NUM_MAX_LENGTH 11
 
+/*
+ * This functions displays the usage program
+ * */
 void usage(char *argv){
 	printf("Usage: %s [PID]\n",argv);
 	exit(EXIT_FAILURE);
 }
-
-queue *filter(queue *list){
-	return NULL;
-}
+/*
+ * This function displays the processes information.
+ * */
 void show_process(process p){
 	printf("Name : %s\n",p.name);
 	printf("State : %c\n",p.state);
 	printf("ID : %d\n",p.pid);
 	printf("Parent ID : %d\n",p.ppid);
 }
+/*
+ * This function gets the first occurence of a given char
+ * */
 int first_occurence(char *string, char ch){
 	
 	for(int a = 0 ; string[a] != '\0';a++ )
@@ -26,6 +31,9 @@ int first_occurence(char *string, char ch){
 			return a;
 	return 0;
 }
+/*
+ * This function retrieves a process name
+ * */
 char *filter_process_name(char *raw_data){
 	
 	int counter = 0;
@@ -79,7 +87,6 @@ process get_process(pid_t process_id){
 		exit(EXIT_FAILURE);
 	}
 	
-	
 	for(int a = 0; a < NUM_LINES;a++){
 		lines[a] = calloc(64,sizeof(char));
 	}
@@ -91,13 +98,6 @@ process get_process(pid_t process_id){
 	getline(&trash,&buff_size,file_handle);
 	getline(&lines[2],&buff_size,file_handle); // Pid
 	getline(&lines[3],&buff_size,file_handle); // PPid
-	
-	/*
-	printf("%s",lines[0]);
-	printf("%s",lines[1]);
-	printf("%s",lines[2]);
-	printf("%s\nFiltered values:\n",lines[3]);
-	*/
 	
 	strncpy(new_process.name,filter_process_name(lines[0]),NAME_MAX);
 	new_process.state = filter_process_state(lines[1]);
