@@ -1,7 +1,4 @@
-#include "lib/queue/queue.h"
-#include "lib/queue/queue.c"
-#include "lib/util/util.h"
-#include "lib/util/util.c"
+#include "utils/utils.c"
 
 int main(int argc, char **argv){
 	
