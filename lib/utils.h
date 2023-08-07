@@ -11,7 +11,7 @@ process_info filter_process(char **);
 char *filter_process_name(char *);
 char filter_process_state(char *);
 int first_occurence(char *, char );
-directory directory_list(const char * );
-void display_files(directory );
+directory directory_list(void );
+void display_pids(directory );
 
 #endif

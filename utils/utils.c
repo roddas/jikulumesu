@@ -1,28 +1,32 @@
 #include "../lib/utils.h"
+#include "linked_list.c"
+#include <ctype.h>
 
-#define NUM_LINES 4
-#define NAME_MAX_LENGTH 21
-#define FILENAME_MAX_LENGTH 32
-#define NUM_MAX_LENGTH 11
-
-directory directory_list(const char *base_dir){
+directory directory_list(void){
 	
-	struct dirent **namelist;
+	struct dirent **namelist = NULL;
 	int number_of_files = scandir("/proc/", &namelist, NULL, alphasort);
 	
 	if (number_of_files == -1) {
-	   perror("scandir");
+	   perror("scandir: ");
 	   exit(EXIT_FAILURE);
 	}
 	return (directory){namelist, number_of_files};
 }
 
-void display_files(directory dir){
+void display_pids(directory dir){
 	while (dir.number_of_files--) {
-	   printf("%s\n", dir.dir[dir.number_of_files]->d_name);
+		const char *pid = dir.dir[dir.number_of_files]->d_name;
+		if(isdigit(pid[0])){
+			
+			process_info current_process = get_process((pid_t)atoi(pid));
+			if(strcmp(current_process.name,"bash") == 0){
+				show_process(current_process);
+				printf("--------------------------------\n");
+			}
+		}
 	}
 }
-
 
 /*
  * This functions displays the usage program
@@ -126,11 +130,6 @@ process_info get_process(pid_t process_id){
 	for(int a = 0; a < NUM_LINES;a++){
 		free(lines[a]);
 	}
-	
-	free(lines);
-	free(pid);
-	free(trash);
-	free(filename);
 	
 	return new_process;
 }

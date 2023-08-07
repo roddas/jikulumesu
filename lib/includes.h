@@ -7,9 +7,13 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-
 #ifndef INCLUDES_H
 #define INCLUDES_H
+
+#define NUM_LINES 4
+#define NAME_MAX_LENGTH 21
+#define FILENAME_MAX_LENGTH 32
+#define NUM_MAX_LENGTH 11
 
 typedef struct dirent dirent;
 
