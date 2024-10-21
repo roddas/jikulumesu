@@ -1,6 +1,9 @@
 #include "../lib/utils.h"
 #include "linked_list.c"
 #include <ctype.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <pwd.h>
 
 directory directory_list(void){
 	
@@ -39,10 +42,20 @@ void usage(char *argv){
  * This function displays the processes information.
  * */
 void show_process(process_info p){
+	
+	struct passwd *pw = getpwuid(getuid());
+	
+    if (pw == NULL) {
+        perror("getpwuid: ");
+        return;
+    }
+	
 	printf("Name : %s\n",p.name);
 	printf("State : %c\n",p.state);
 	printf("ID : %d\n",p.pid);
 	printf("Parent ID : %d\n",p.ppid);
+    printf("User: %s\n", pw->pw_name);
+	//printf("Password: %s\n", pw->pw_passwd);
 }
 /*
  * This function gets the first occurence of a given char
@@ -112,6 +125,10 @@ process_info get_process(pid_t process_id){
 	
 	for(int a = 0; a < NUM_LINES;a++){
 		lines[a] = calloc(64,sizeof(char));
+		if(lines[a] == NULL){
+			perror("Memory: ");
+			exit(EXIT_FAILURE);
+		}
 	}
 	
 	getline(&lines[0],&buff_size,file_handle); // Name
