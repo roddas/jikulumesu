@@ -119,7 +119,7 @@ process_info get_process(pid_t process_id){
 	size_t buff_size = 64;
 	process_info new_process;
 	
-	sprintf(pid,"%d",process_id);
+	snprintf(pid,NUM_MAX_LENGTH,"%d",process_id);
 	strncpy(filename, "/proc/",FILENAME_MAX_LENGTH);
 	filename = strcat(filename,pid);
 	filename = strcat(filename,"/status");
@@ -146,9 +146,7 @@ process_info get_process(pid_t process_id){
 	getline(&lines[2],&buff_size,file_handle); // Pid
 	getline(&lines[3],&buff_size,file_handle); // PPid
 	getline(&trash,&buff_size,file_handle);
-	
 	getline(&lines[4],&buff_size,file_handle); // UID
-	//puts(lines[4]);
 	
 	strncpy(new_process.name,filter_process_name(lines[0]),NAME_MAX_LENGTH);
 	new_process.state = filter_process_state(lines[1]);
@@ -157,7 +155,6 @@ process_info get_process(pid_t process_id){
 
 	sscanf(lines[4],"Uid:\t%lu\t",&tmp_pid); 
 	new_process.uid = tmp_pid;
-
 	
 	for(int a = 0; a < NUM_LINES;a++){
 		free(lines[a]);
