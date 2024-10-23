@@ -94,6 +94,7 @@ pid_t filter_process_id(char *raw_data){
 	if(!pid){
 		perror("Memory :");
 	}
+	
 	for(int a = first_occurence(raw_data,'\t') + 1; raw_data[a] != '\n';a++){
 		pid[counter++] = raw_data[a];
 	}
@@ -109,6 +110,7 @@ process_info get_process(pid_t process_id){
 	char *filename = calloc(FILENAME_MAX,sizeof(char));
 	char ** lines = calloc(NUM_LINES,sizeof(char *));
 	char * trash = calloc(64,sizeof(char));
+	
 	size_t buff_size = 64;
 	process_info new_process;
 	
