@@ -22,9 +22,7 @@ void free_directory_list_memory(directory dir){
 	
 	for(size_t i = 0; i < number_of_files;i++){
 		if(dir.dir[i] != NULL)
-		{
-			free(dir.dir[i]);
-		}
+		free(dir.dir[i]);
 	}
 }
 
@@ -54,18 +52,11 @@ void usage(char *argv){
  * */
 void show_process(process_info p){
 	
-	struct passwd *pw = getpwuid(getuid());
-	
-    if (pw == NULL) {
-        perror("getpwuid: ");
-        return;
-    }
-	
 	printf("Name : %s\n",p.name);
 	printf("State : %c\n",p.state);
 	printf("ID : %d\n",p.pid);
 	printf("Parent ID : %d\n",p.ppid);
-    printf("User: %s\n", pw->pw_name);
+    printf("User ID: %lu\n", p.uid);
 	//printf("Password: %s\n", pw->pw_passwd);
 }
 /*
@@ -123,6 +114,7 @@ process_info get_process(pid_t process_id){
 	char *filename = calloc(FILENAME_MAX,sizeof(char));
 	char ** lines = calloc(NUM_LINES,sizeof(char *));
 	char * trash = calloc(64,sizeof(char));
+	size_t tmp_pid;
 	
 	size_t buff_size = 64;
 	process_info new_process;
@@ -153,11 +145,19 @@ process_info get_process(pid_t process_id){
 	getline(&trash,&buff_size,file_handle);
 	getline(&lines[2],&buff_size,file_handle); // Pid
 	getline(&lines[3],&buff_size,file_handle); // PPid
+	getline(&trash,&buff_size,file_handle);
+	
+	getline(&lines[4],&buff_size,file_handle); // UID
+	//puts(lines[4]);
 	
 	strncpy(new_process.name,filter_process_name(lines[0]),NAME_MAX_LENGTH);
 	new_process.state = filter_process_state(lines[1]);
 	new_process.pid = filter_process_id(lines[2]);
 	new_process.ppid = filter_process_id(lines[3]);
+
+	sscanf(lines[4],"Uid:\t%lu\t",&tmp_pid); 
+	new_process.uid = tmp_pid;
+
 	
 	for(int a = 0; a < NUM_LINES;a++){
 		free(lines[a]);

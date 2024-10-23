@@ -10,7 +10,7 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
-#define NUM_LINES 4
+#define NUM_LINES 5
 #define NAME_MAX_LENGTH 21
 #define FILENAME_MAX_LENGTH 64
 #define NUM_MAX_LENGTH 11
@@ -22,6 +22,7 @@ typedef struct {
 	pid_t ppid;
 	char name[21];
 	char state;
+	size_t uid;
 }process_info;
 
 typedef struct {
