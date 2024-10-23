@@ -2,8 +2,6 @@
 #include "linked_list.c"
 #include <ctype.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <pwd.h>
 
 directory directory_list(void){
 	
@@ -71,7 +69,7 @@ int first_occurence(char *string, char ch){
 /*
  * This function retrieves a process name
  * */
-char *filter_process_name(char *raw_data){
+char *get_process_name(char *raw_data){
 	
 	int counter = 0;
 	char *filtered_name = calloc(NAME_MAX_LENGTH,sizeof(char));
@@ -147,7 +145,7 @@ process_info get_process(pid_t process_id){
 	getline(&trash,&buff_size,file_handle);
 	getline(&lines[4],&buff_size,file_handle); // UID
 	
-	strncpy(new_process.name,filter_process_name(lines[0]),NAME_MAX_LENGTH);
+	strncpy(new_process.name,get_process_name(lines[0]),NAME_MAX_LENGTH);
 	new_process.state = filter_process_state(lines[1]);
 	new_process.pid = filter_process_id(lines[2]);
 	new_process.ppid = filter_process_id(lines[3]);

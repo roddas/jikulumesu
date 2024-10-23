@@ -8,7 +8,7 @@ void show_process(process_info );
 void usage(char *);
 pid_t filter_process_id(char *);
 process_info filter_process(char **);
-char *filter_process_name(char *);
+char *get_process_name(char *);
 char filter_process_state(char *);
 int first_occurence(char *, char );
 directory directory_list(void );
