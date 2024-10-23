@@ -106,7 +106,9 @@ pid_t filter_process_id(char *raw_data){
 }
 process_info get_process(pid_t process_id){
 	
-	char *pid = calloc(NUM_MAX_LENGTH,sizeof(char));
+	char pid[NUM_MAX_LENGTH];
+	memset(pid,'\0',sizeof(char));
+	
 	char *filename = calloc(FILENAME_MAX,sizeof(char));
 	char ** lines = calloc(NUM_LINES,sizeof(char *));
 	char * trash = calloc(64,sizeof(char));
