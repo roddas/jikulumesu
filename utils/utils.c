@@ -17,6 +17,17 @@ directory directory_list(void){
 	return (directory){namelist, number_of_files};
 }
 
+void free_directory_list_memory(directory dir){
+	size_t number_of_files = dir.number_of_files;
+	
+	for(size_t i = 0; i < number_of_files;i++){
+		if(dir.dir[i] != NULL)
+		{
+			free(dir.dir[i]);
+		}
+	}
+}
+
 void display_pids(directory dir){
 	while (dir.number_of_files--) {
 		const char *pid = dir.dir[dir.number_of_files]->d_name;

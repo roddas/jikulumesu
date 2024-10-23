@@ -13,5 +13,6 @@ char filter_process_state(char *);
 int first_occurence(char *, char );
 directory directory_list(void );
 void display_pids(directory );
+void free_directory_list_memory(directory );
 
 #endif

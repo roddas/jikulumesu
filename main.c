@@ -9,7 +9,8 @@ int main(int argc, char **argv){
 	}
 	show_process(get_process(atoi(argv[1])));
  * */
- 
-	display_pids(directory_list());	
+	directory dir = directory_list();
+	display_pids(dir);
+	free_directory_list_memory(dir);	
 	return EXIT_SUCCESS;
 }
