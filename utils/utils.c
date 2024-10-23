@@ -57,7 +57,6 @@ void show_process(process_info p){
 	printf("ID : %d\n",p.pid);
 	printf("Parent ID : %d\n",p.ppid);
     printf("User ID: %lu\n", p.uid);
-	//printf("Password: %s\n", pw->pw_passwd);
 }
 /*
  * This function gets the first occurence of a given char
