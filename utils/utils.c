@@ -27,10 +27,10 @@ void free_directory_list_memory(directory dir){
 }
 
 void display_pids(directory dir){
-	while (dir.number_of_files--) {
-		const char *pid = dir.dir[dir.number_of_files]->d_name;
+	
+	 for(size_t i = 0; i < dir.number_of_files;i++) {
+		const char *pid = dir.dir[i]->d_name;
 		if(isdigit(pid[0])){
-			
 			process_info current_process = get_process((pid_t)atoi(pid));
 			if(strcmp(current_process.name,"bash") == 0){
 				show_process(current_process);
