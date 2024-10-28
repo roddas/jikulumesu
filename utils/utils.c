@@ -2,6 +2,7 @@
 #include "linked_list.c"
 #include <ctype.h>
 #include <stdio.h>
+#include <pwd.h>
 
 directory directory_list(void){
 	
@@ -24,6 +25,11 @@ void free_directory_list_memory(directory dir){
 			free(dir.dir[i]);
 		}
 	}
+}
+
+char *get_username(uid_t uid){
+	struct passwd *pwd = getpwuid(uid);
+	return pwd->pw_name;
 }
 
 void display_pids(directory dir){
@@ -56,6 +62,7 @@ void show_process(process_info p){
 	printf("State : %c\n",p.state);
 	printf("ID : %d\n",p.pid);
 	printf("Parent ID : %d\n",p.ppid);
+	printf("Username: %s\n", get_username(p.uid));
     printf("User ID: %lu\n", p.uid);
 }
 /*

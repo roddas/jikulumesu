@@ -14,5 +14,6 @@ int first_occurence(char *, char );
 directory directory_list(void );
 void display_pids(directory );
 void free_directory_list_memory(directory );
+char *get_username(uid_t );
 
 #endif
