@@ -20,7 +20,9 @@ void free_directory_list_memory(directory dir){
 	
 	for(size_t i = 0; i < number_of_files;i++){
 		if(dir.dir[i] != NULL)
-		free(dir.dir[i]);
+		{
+			free(dir.dir[i]);
+		}
 	}
 }
 
@@ -71,7 +73,7 @@ int first_occurence(char *string, char ch){
  * */
 char *get_process_name(char *raw_data){
 	
-	int counter = 0;
+	unsigned int counter = 0;
 	char *filtered_name = calloc(NAME_MAX_LENGTH,sizeof(char));
 	
 	if(!filtered_name){
@@ -88,20 +90,14 @@ char filter_process_state(char *raw_data){
 pid_t filter_process_id(char *raw_data){
 	
 	int counter = 0;
-	char *pid = calloc(NUM_MAX_LENGTH,sizeof(char));
-	
-	if(!pid){
-		perror("Memory :");
-	}
+	char pid[NUM_MAX_LENGTH];
+	memset(pid,'\0',NUM_MAX_LENGTH);
 	
 	for(int a = first_occurence(raw_data,'\t') + 1; raw_data[a] != '\n';a++){
 		pid[counter++] = raw_data[a];
 	}
 	
-	pid_t process_id = atoi(pid);
-	free(pid);
-	
-	return process_id;
+	return (pid_t)atoi(pid);
 }
 process_info get_process(pid_t process_id){
 	
@@ -110,7 +106,7 @@ process_info get_process(pid_t process_id){
 	
 	char *filename = calloc(FILENAME_MAX,sizeof(char));
 	char ** lines = calloc(NUM_LINES,sizeof(char *));
-	char * trash = calloc(64,sizeof(char));
+	char *trash = NULL;
 	size_t tmp_pid;
 	
 	size_t buff_size = 64;
