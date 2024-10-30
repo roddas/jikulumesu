@@ -41,14 +41,11 @@ void display_pids(directory dir){
 		const char *pid = dir.dir[i]->d_name;
 		if(isdigit(pid[0])){
 			process_info current_process = get_process((pid_t)atoi(pid));
-			//if(strcmp(current_process.name,"bash") == 0){
-				show_process(current_process);
-				printf("--------------------------------\n");
-			//}
+			show_process(current_process);
+			printf("--------------------------------\n");
 		}
 	}
 }
-
 
 /*
  * This functions displays the usage program
