@@ -23,8 +23,11 @@ void free_directory_list_memory(directory dir){
 		if(dir.dir[i] != NULL)
 		{
 			free(dir.dir[i]);
+			dir.dir[i] = NULL;
 		}
 	}
+	free(dir.dir);
+	dir.dir = NULL;
 }
 
 char *get_username(uid_t uid){
@@ -38,13 +41,14 @@ void display_pids(directory dir){
 		const char *pid = dir.dir[i]->d_name;
 		if(isdigit(pid[0])){
 			process_info current_process = get_process((pid_t)atoi(pid));
-			if(strcmp(current_process.name,"bash") == 0){
+			//if(strcmp(current_process.name,"bash") == 0){
 				show_process(current_process);
 				printf("--------------------------------\n");
-			}
+			//}
 		}
 	}
 }
+
 
 /*
  * This functions displays the usage program
